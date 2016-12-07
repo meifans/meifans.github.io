@@ -11,3 +11,6 @@
 read the book. 我对于书的问题是诸如任何人不需要读那本书就能提出的问题或回答那样的。
  + they almost pull themselves up by their bootstraps，making an effort to read better than they usually do.他们几乎是靠自己的努力，让阅读的效果比他们平时好一点。
  + We would have to know what demands they make on the skill of the reader. 我们必须知道他们对读者技能的要求。
+ + Why should I be asking that four years of college be spent primarily in learning to read and in reading great books?
+  为什么我应该问，大学四年的主要时间要花在学习阅读和阅读好书上？
+ + As the things to be read have different values,we must use them accordingly.因为这些要读的书有不同的价值，我们必须相应的阅读他们。
