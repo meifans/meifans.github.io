@@ -14,3 +14,4 @@ read the book. 我对于书的问题是诸如任何人不需要读那本书就�
  + Why should I be asking that four years of college be spent primarily in learning to read and in reading great books?
   为什么我应该问，大学四年的主要时间要花在学习阅读和阅读好书上？
  + As the things to be read have different values,we must use them accordingly.因为这些要读的书有不同的价值，我们必须相应的阅读他们。
+ + It is possible to be mistaken in your judgement of something your reading. 你阅读时对某些内容的判断可能是错的。
