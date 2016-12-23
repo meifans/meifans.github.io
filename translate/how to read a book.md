@@ -15,3 +15,8 @@ read the book. 我对于书的问题是诸如任何人不需要读那本书就�
   为什么我应该问，大学四年的主要时间要花在学习阅读和阅读好书上？
  + As the things to be read have different values,we must use them accordingly.因为这些要读的书有不同的价值，我们必须相应的阅读他们。
  + It is possible to be mistaken in your judgement of something your reading. 你阅读时对某些内容的判断可能是错的。
+ + It was just words they had memorized to be able to repeat somehow when I shot an question at them
+   他们记住的只是当我向他们发问时可以重复的话而已。
+ + To whatever extent it is true that reading is learning, it is also true that reading is thinking.
+    任何情况下阅读都是学习，也是思考。
+ + Much more time is spent in training students how to discover things for themselves than in training them how to learn from others.   更多的时间花在训练学生如何通过自己发现东西，而不是训练他们如何通过其他人来学习。（通过reading，listening）
