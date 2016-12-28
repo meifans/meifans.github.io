@@ -20,3 +20,5 @@ read the book. 我对于书的问题是诸如任何人不需要读那本书就�
  + To whatever extent it is true that reading is learning, it is also true that reading is thinking.
     任何情况下阅读都是学习，也是思考。
  + Much more time is spent in training students how to discover things for themselves than in training them how to learn from others.   更多的时间花在训练学生如何通过自己发现东西，而不是训练他们如何通过其他人来学习。（通过reading，listening）
+ + In this respect a book is like nature. When you speak to it,it answers you only to the extent that you do the work of thinking and analysis yourself. 在这个方面书很像自然，如果你问它什么，只有你的思考和分析到了一定的程度，书才会回答你。
+ + But the point remains that we can always tell,if we take the pains to do so,whether we learned something we know from some else or whether we found it out for ourselves. 但问题是，是否我们可以一直认为，如果我们付出努力，就可以从某人那里获得知识或者发现某些东西。
