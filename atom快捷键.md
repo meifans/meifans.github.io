@@ -1,5 +1,18 @@
 
 ## atom 快捷键
+
+### 对应关系
+⌘ : Command key
+⌃ : Control key
+⌫ : Delete key
+← : Left arrow key
+→ : Right arrow key
+↑ : Up arrow key
+↓ : Down arrow key
+⌥ : Option or Alt key
+↩ : Return or Enter key
+⇧ : Shift key
+
 ### 编辑器
 + ctrl-shift-p 打开命令行
 + ctrl-n 新开文件页面
@@ -10,12 +23,12 @@
 + ctrl-\ 隐藏目录树
 + ctrl-tab 切换标签
 ### 编辑行
-+ ctrl-enter 向下打开一行
-+ ctrl-enter 向上打开一行
++ ↑ + enter 向下打开一行
++ ↑ + ⌘ +enter 向上打开一行
 + ctrl-up/down 选中行上/下移
 + ctrl-/ 注释行
 + ctrl-shift-d 复制行
-+ ctrl-shift-k 删除行
++ ⌘ + d 删除行
 + shift-up/down 选中行向上/下
 + ctrl-j 行与后面行合并
 ### 编辑字段
