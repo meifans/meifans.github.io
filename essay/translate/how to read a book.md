@@ -29,3 +29,4 @@ read the book. 我对于书的问题是诸如任何人不需要读那本书就�
  + The habit of doing it becomes a more pervasive substitute for learning and thinking as one spends more years in educational institutions. 随着一个人在学校机构学习的更多的时间，做笔记代替学习和思考的这个习惯越来越普遍。
  + Most of the students were taking the course for credit,not merit.Since the examination did not measure understanding but information,they probably regarded my explanations as a waste of their time. 大多数学生参加这个课程是为了学分而不是因为它的价值。因为考试实际衡量的是信息而不是理解，他们可能认为我的理解浪费了他们的时间。
  + The path of true learning is strewn with rocks, not roses. 真正的学习之路上铺满的是石头，不是玫瑰。
+ + It is the obligation of secondary teachers to facilitate the approach to this ideal. 二流教师的责任是帮助达成这个理想。
