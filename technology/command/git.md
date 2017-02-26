@@ -1,5 +1,5 @@
 
-## git 命令
+## git 工作命令
 
 ### diff
 
@@ -43,3 +43,9 @@
 
 ### merge
 + git  merge 分支A           把分支A合并到当前分支
+
+
+## git 身份验证命令
+
++ 启动agent : eval $(ssh-agent -s)
++ 添加key :   ssh-add 私钥名字（不带.pub）
