@@ -16,6 +16,8 @@ hs_err_pid*
 *.classpath
 *.project
 target/
+*.DS_Store
+
 
 # maven ignore
 
