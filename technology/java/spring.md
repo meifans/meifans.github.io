@@ -2,45 +2,45 @@
 
 ### Spring Ioc容器
 
-+ 什么是Ioc
+1. 什么是Ioc
 
   依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。
 
 `优势`： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，测试方便。
 
-+ bean 生命周期
+2. bean 生命周期
 
-1. 寻找bean的BeanDefinition（xml方式或注解Java对象方式），并实例化bean
-  > 提供元数据的三种方式
-    1. Xml配置文件
-    2. 基于注解的配置
-    3. 基于Java的配置
+  1. 寻找bean的BeanDefinition（xml方式或注解Java对象方式），并实例化bean
+    > 提供元数据的三种方式
+      1. Xml配置文件
+      2. 基于注解的配置
+      3. 基于Java的配置
 
-2. 对bean进行依赖注入。
+  2. 对bean进行依赖注入。
 
-3. 注入实现各种Aware。
+  3. 注入实现各种Aware。
 
-  + BeanNameAware        注入bean的名字
-  + BeanClassLoaderAware 注入bean的classloader
-  + BeanFactoryAware     注入bean所在的factory
+    + BeanNameAware        注入bean的名字
+    + BeanClassLoaderAware 注入bean的classloader
+    + BeanFactoryAware     注入bean所在的factory
 
-4. BeanPostProcessor 的before方法 -> InitializingBean.afterPropertiesSet()（bean的初始化方法） -> BeanPostProcessor 的after方法
+  4. BeanPostProcessor 的before方法 -> InitializingBean.afterPropertiesSet()（bean的初始化方法） -> BeanPostProcessor 的after方法
 
-5. DisposableBean.destory 释放资源 ？ -> destory (指定的bean销毁方法)
+  5. DisposableBean.destory 释放资源 ？ -> destory (指定的bean销毁方法)
 
-+ bean 类型
+3. bean 类型
   + `singleton` 单例（默认）
   + `prototype` 原型 每个bean都是新的
   + `request` 每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。
   + `session` 在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring   + ApplicationContext情形下有效。
   + `global-session` 在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
 
-+ ApplicationContext 相比 BeanFactory的优势
+4. ApplicationContext 相比 BeanFactory的优势
   + 支持多于一种配置（不止xml文件）
   + 支持bean注册观察者，publish event
   + I18n ...and so on
 
-+ 自动装配
+5. 自动装配
 
   + `no`:
     这是Spring框架的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。
@@ -57,7 +57,7 @@
   + `autodetect`:
     该模式自动探测使用构造器自动装配或者byType自动装配。首先，首先会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byTpe的自动装配方式。
 
-+ 常见的ApplicationContext 的实现方式
+6. 常见的ApplicationContext 的实现方式
   1. ClassPathXmlApplicationContext：从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得。
 
          ApplicationContext context = new ClassPathXmlApplicationContext(“bean.xml”);
@@ -68,7 +68,7 @@
 
   3. XmlWebApplicationContext：由Web应用的XML文件读取上下文。
 
-+ ApplicationContext中的事件类型
+8. ApplicationContext中的事件类型
 
   一个bean实现了ApplicationListener接口，当一个ApplicationEvent 被发布以后，bean会自动被通知。
 
@@ -84,7 +84,7 @@
 
   6. 自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。
 
-+ spring 常用模块
+9. spring 常用模块
   + The Core container module
 
     >提供 Spring 框架的基本功能。核心容器的主要组件是BeanFactory，它是工厂模式的实现。BeanFactory 使用控制反转 （IOC） 模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。
