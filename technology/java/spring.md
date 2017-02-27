@@ -4,7 +4,7 @@
 
 + 什么是Ioc
 
-依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。
+  依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。
 
 `优势`： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，测试方便。
 
@@ -19,6 +19,7 @@
 2. 对bean进行依赖注入。
 
 3. 注入实现各种Aware。
+
   + BeanNameAware        注入bean的名字
   + BeanClassLoaderAware 注入bean的classloader
   + BeanFactoryAware     注入bean所在的factory
@@ -28,11 +29,11 @@
 5. DisposableBean.destory 释放资源 ？ -> destory (指定的bean销毁方法)
 
 + bean 类型
-  + singleton 单例（默认）
-  + prototype 原型 每个bean都是新的
-  + request：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。
-  + session：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring   + ApplicationContext情形下有效。
-  + global-session：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
+  + `singleton` 单例（默认）
+  + `prototype` 原型 每个bean都是新的
+  + `request` 每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。
+  + `session` 在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring   + ApplicationContext情形下有效。
+  + `global-session` 在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。
 
 + ApplicationContext 相比 BeanFactory的优势
   + 支持多于一种配置（不止xml文件）
@@ -41,19 +42,19 @@
 
 + 自动装配
 
-  + no：
+  + `no`:
     这是Spring框架的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。
 
-  + byName：
+  + `byName`:
     该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。
 
-  + byType：
+  + `byType`:
     该选项可以根据bean类型设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的类型自动在在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。
 
-  + constructor：
+  + `constructor`:
     造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器中没有找到与构造器参数类型一致的bean，那么将会抛出异常。
 
-  + autodetect：
+  + `autodetect`:
     该模式自动探测使用构造器自动装配或者byType自动装配。首先，首先会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byTpe的自动装配方式。
 
 + 常见的ApplicationContext 的实现方式
@@ -81,7 +82,7 @@
 
   5. 请求处理事件（RequestHandledEvent）：在Web应用中，当一个http请求（request）结束触发该事件。
 
-  6. 自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。 
+  6. 自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。
 
 + spring 常用模块
   + The Core container module
