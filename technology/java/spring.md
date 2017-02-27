@@ -1,4 +1,6 @@
-## bean
+# Spring 面试指南
+
+## Spring 核心
 
 ### Spring Ioc容器
 
@@ -12,9 +14,9 @@
 
   1. 寻找bean的BeanDefinition（xml方式或注解Java对象方式），并实例化bean
     > 提供元数据的三种方式
-      1. Xml配置文件
-      2. 基于注解的配置
-      3. 基于Java的配置
+    >   1. Xml配置文件
+    >   2. 基于注解的配置
+    >   3. 基于Java的配置
 
   2. 对bean进行依赖注入。
 
@@ -26,7 +28,7 @@
 
   4. BeanPostProcessor 的before方法 -> InitializingBean.afterPropertiesSet()（bean的初始化方法） -> BeanPostProcessor 的after方法
 
-  5. DisposableBean.destory 释放资源 ？ -> destory (指定的bean销毁方法)
+  5. DisposableBean.destory 释放资源  -> destory (指定的bean销毁方法)
 
 3. bean 类型
   + `singleton` 单例（默认）
@@ -72,17 +74,17 @@
 
   一个bean实现了ApplicationListener接口，当一个ApplicationEvent 被发布以后，bean会自动被通知。
 
-  1. 上下文更新事件（ContextRefreshedEvent）：该事件会在ApplicationContext被初始化或者更新时发布。也可以在调用ConfigurableApplicationContext 接口中的refresh()方法时被触发。
+  + 上下文更新事件（ContextRefreshedEvent）：该事件会在ApplicationContext被初始化或者更新时发布。也可以在调用ConfigurableApplicationContext 接口中的refresh()方法时被触发。
 
-  2. 上下文开始事件（ContextStartedEvent）：当容器调用ConfigurableApplicationContext的Start()方法开始/重新开始容器时触发该事件。
+  + 上下文开始事件（ContextStartedEvent）：当容器调用ConfigurableApplicationContext的Start()方法开始/重新开始容器时触发该事件。
 
-  3. 上下文停止事件（ContextStoppedEvent）：当容器调用ConfigurableApplicationContext的Stop()方法停止容器时触发该事件。
+  + 上下文停止事件（ContextStoppedEvent）：当容器调用ConfigurableApplicationContext的Stop()方法停止容器时触发该事件。
 
-  4. 上下文关闭事件（ContextClosedEvent）：当ApplicationContext被关闭时触发该事件。容器被关闭时，其管理的所有单例Bean都被销毁。
+  + 上下文关闭事件（ContextClosedEvent）：当ApplicationContext被关闭时触发该事件。容器被关闭时，其管理的所有单例Bean都被销毁。
 
-  5. 请求处理事件（RequestHandledEvent）：在Web应用中，当一个http请求（request）结束触发该事件。
+  + 请求处理事件（RequestHandledEvent）：在Web应用中，当一个http请求（request）结束触发该事件。
 
-  6. 自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。
+  + 自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。
 
 9. spring 常用模块
   + The Core container module
@@ -114,3 +116,6 @@
 
 +  类型 ：声明式事务管理、编程式事务管理。
 + Advice类型：
+
+
+## Spring 新特性
