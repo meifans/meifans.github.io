@@ -53,9 +53,9 @@
 
 #### volatile 作用
   1. 保证内存可见性
-  2. 防止指令重排
+  2. 防止指令重排 (JDK1.5以后)
 
-**内存可见性**
+#### 内存可见性
 
   概念：JVM 内存模型
 
@@ -90,13 +90,129 @@
   > 注意,最终是一定会同步会主内存中，但是时间不是立刻。
   >
   >此时，将布尔变量标志为 volatile，就能保证B立刻终止。
+  >或者使用synchronize同步布尔变量的get/set方法，要get必须要set释放。
 
   `volatile保证可见性的原理`
 
  在每次访问变量时都会进行一次刷新，因此每次访问都是主内存中最新的版本。所以volatile保证变量修改的实时可见性。
 
+#### 指令重排
 
-**缓存**
+**概念**
+指令重排序是JVM为了优化指令，提高程序运算效率，在不影响单线程程序执行结果的前提下，尽可能的提高并行度。编译器处理器也是遵循这一个目标，但是多线程情况下就会给带来困扰。
+
+as-if-serial语义是指：不管如何重排序（编译器与处理器为了提高并行度），（单线程）程序的结果不能被改变。这是编译器、Runtime、处理器必须遵守的语义。
+
+分类： 编译器重排序、运行时重排序。
+
+>不同指令间可能存在数据依赖，比如下面的计算圆面积的代码
+
+    double r = 2.3d;         //(1)
+    double pi =3.1415926;    //(2)
+    double area = pi* r * r; //(3)
+>area的计算依赖于1和2的计算结果，但是1与2的计算没有依赖。执行顺序是123，还是213，对于最后结果没有影响。
+>编译器、Runtime可以在优化时根据情况重排。
+
+**重排导致的问题**
+
+如果一个操作不是原子的，就会给JVM留下重排的机会。
+
+`A线程指令重排导致B线程出错`
+  + 在A线程中：
+        context = loadContext();
+        inited = true;
+  + 在B线程中：
+        while(!inited ){     //根据线程A中对inited变量的修改决定是否使用context变量
+          sleep(100);
+        }
+        doSomethingwithconfig(context);
+
+  + 假设线程A中发生了指令重排序:
+        inited = true;
+        context = loadContext();
+  那么B中很可能就会拿到一个尚未初始化或尚未初始化完成的context,从而引发程序错误。
+
+`指令重排导致单例模式失效`
+
+一个经典的懒加载的单例模式：
+
+      public class Singleton {
+
+        private static Singleton instance = null;
+
+        private Singleton() { }
+
+        public static Singleton getInstance() {
+          if(instance == null) {
+            synchronzied(Singleton.class) {
+              if(instance == null) {
+                  instance = new Singleton();  
+              }
+            }
+          }
+          return instance;
+        }
+      }
+
+看似是一条的语句：instance = new Singleton(),从操作上看并不是原子的，可以抽象为以下几条JVM命令：
+
+    memory =allocate();    //1：分配对象的内存空间
+    ctorInstance(memory);  //2：初始化对象
+    instance =memory;      //3：设置instance指向刚分配的内存地址
+
+上面操作2依赖于1，但是3并不依赖2.所以JVM可以对它们指令重排。重新排序后如下：
+
+    memory =allocate();    //1：分配对象的内存空间
+    instance =memory;      //3：instance指向刚分配的内存地址，此时对象还未初始化
+    ctorInstance(memory);  //2:初始化对象
+
+可以看到指令重排之后，instance指向分配好的内存放在了前面，而这段内存初始化成对象放在了后面。
+
+在线程A执行这段赋值语句，在初始化分配对象之前就已经将其赋值给instance引用，恰好另一个线程进入方法判断instance引用不为null，然后就将其返回使用，导致出错。
+
+**volatile如何解决指令重排**
+
+解决方案：例子1中的inited和例子2中的instance以关键字volatile修饰之后，就会阻止JVM对其相关代码进行指令重排，这样就能够按照既定的顺序指执行。
+
+volatile关键字通过提供“内存屏障”的方式来防止指令被重排序，为了实现volatile的内存语义，编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排序。大多数的处理器都支持内存屏障的指令。
+
+对于编译器来说，发现一个最优调整来最小化插入屏障的总数几乎不可能，为此，Java内存模型采取保守策略。下面是基于保守策略的JMM内存屏障插入策略：
+
+    在每个volatile写操作的前面插入一个StoreStore屏障。
+
+    在每个volatile写操作的后面插入一个StoreLoad屏障。
+
+    在每个volatile读操作的后面插入一个LoadLoad屏障。
+
+    在每个volatile读操作的后面插入一个LoadStore屏障。
+
+#### volatile对比synchronzied
+
+**volatile优劣点**
+
+`优点`：相比于synchronzied 代码块的代码锁，volatile是一种稍弱的同步机制，在访问volatile变量时不会执行加锁操作，也就不会执行线程阻塞，因此volatile更轻量。
+>在两个或者更多的线程需要访问的成员变量上使用volatile。当要访问的变量已在synchronized代码块中，或者为常量时，没必要使用volatile。
+
+`缺点`：由于使用volatile屏蔽掉了JVM中必要的代码优化，所以在效率上比较低，因此一定在必要时才使用此关键字。
+
+**区别**
+
+`volatile`:
+  + 不加锁，只保证可见性。
+  + volatile声明的变量如果当前值需要用到该值以前的值，那么volatile不起作用。即，count++,count = count + 1 ，都是非原子操作。
+
+`synchronized`:
+  + 加锁（同步）机制，既保证可见性又保证原子性
+
+
+
+>在需要同步的时候，第一选择应该是synchronized关键字，这是最安全的方式，尝试其他任何方式都是有风险的.在jdK1.5之后，对synchronized同步机制做了很多优化，如：自适应的自旋锁、锁粗化、锁消除、轻量级锁等，使得它的性能有了很大的提升。
+> 
+>当且仅当满足以下所有条件时，才应该使用volatile变量：
+  1. 对变量的写入操作不依赖变量的当前值，或者你能确保只有单个线程更新变量的值。
+  2. 该变量没有包含在具有其他变量的不变式中。
+
+### 缓存
 
 CPU直接访问主内存是非常慢的，为了提高速度，cpu与主内存之间有几层缓存。
 >如果你正对一块数据做相同的运算，执行运算的时候把它加载到离cpu更近的地方就很有必要了。
