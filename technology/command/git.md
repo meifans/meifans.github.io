@@ -33,6 +33,8 @@
 + git reset --hard ORIG_HEAD       撤销已经提交的合并后的代码。(merge 之后解决冲突又add，commit 了)
 >但是命令比较危险，如果把已经被别的分支合并的分支删掉，以后和它合并时会出错。
 
++ git reset --hard origin/master 把当前分支放弃，强行和远程master同步
+
 ### checkout
 + git checkout 分支名|commit摘要    跳转到某个分支或某次commit
 + git checkout -b 分支名         基于当前分支创建一个新的分支（分支名），并跳转过去
@@ -44,6 +46,13 @@
 ### merge
 + git  merge 分支A           把分支A合并到当前分支
 
+### push
++ git push origin 分支名     把当前分支推到origin远端的分支
++ git push -u origin 分支名  若分支不存在，在远端创建一个
++ git push -f origin 分支名   强行把当前分支推到远端，若不存在创建一个，若存在，覆盖掉。
+
+### remote
++ git remote add origin git@github.com:meifans/meifans-patterns.git（例子） 添加一个远端到本地，用origin表示
 
 ## git 身份验证命令
 

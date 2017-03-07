@@ -1,6 +1,7 @@
 
 * [并发](#并发)
   * [并发包](#并发包)
+    * [future](#future)
     * [线程池](#threadpoolexecutor)
   * [修饰符](#修饰符)
     * [volatile](#volatile)
