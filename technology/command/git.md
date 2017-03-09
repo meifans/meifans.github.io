@@ -11,7 +11,8 @@
 + git diff --color-words 或者 --word-diff  把一行内的改动显示出来
 + git diff --stat 简要显示区别 （只显示被改动的文件名）
 + git diff 分支名 分支名 显示2个分支之间的区别
-
++ git diff --shortstat "@{0 day ago}" 显示今天写了多少代码
++ git diff origin/master 文件名  和远端master比较指定文件的区别
 > 提示
   + 各个参数可以组合使用 比如 git diff 分支名 分支名  --stat ，快速判断两个分支之间的不同的文件。
   + 分清楚暂存区和commit的区别
@@ -42,6 +43,7 @@
 
 ### branch
 + git branch -d 分支名        删除某个分支
++ git branch -a 显示远端和本地分支
 
 ### merge
 + git  merge 分支A           把分支A合并到当前分支
