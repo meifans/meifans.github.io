@@ -59,7 +59,7 @@
 + ⌥ + ⌘ + p   parameter
 + ⌥ + ⌘ + f   field
 + ⌥ + ⌘ + m   method
-+ ⌥ + ⌘ + n   inline
++ ⌥ + ⌘ + n   inline(消除变量)
 + ⌥ + ⌘ + v   variable
 
 + ⌘ + ⇧ + f   重命名

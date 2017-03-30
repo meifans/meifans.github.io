@@ -56,6 +56,12 @@
 ### remote
 + git remote add origin git@github.com:meifans/meifans-patterns.git（例子） 添加一个远端到本地，用origin表示
 
+### rm
++ git rm -r -n --cached  */Runtime/\*      -n：加上这个参数，执行命令时，是不会删除任何文件，而是展示此命令要删除的文件列表预览。
+
++ git rm -r --cached  */Runtime/\*      最终执行命令.
+> 不再追踪runtime目录下的所有东西
+
 ## git 身份验证命令
 
 + 启动agent : eval $(ssh-agent -s)
