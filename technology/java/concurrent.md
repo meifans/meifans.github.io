@@ -8,16 +8,20 @@
       * [术语定义](#术语定义)
       * [内存可见性](#内存可见性)
       * [指令重排](#指令重排)
+      * [volatile用法](#volatile用法)
       * [对比synchronzied](#volatile对比synchronzied)
   * [内存模型](#内存模型)
-    *
+    * [内存屏障](#内存屏障)
+      * [happen-before](#happen-before)
+      * [指令重排](#指令重排)
+    * [抽象结构](#抽象结构)
   * [操作系统相关概念](#操作系统相关概念)
     * [缓存](#缓存)
       * [操作系统内存可见性](#操作系统内存可见性)
 
 
 
-#并发
+# 并发
 
 ## 并发包
 
@@ -231,6 +235,49 @@ volatile关键字通过提供“内存屏障”的方式来防止指令被重排
 
     在每个volatile读操作的后面插入一个LoadStore屏障。
 
+#### volatile用法
+
+    class VolatileExample {
+        int x = 0;
+        volatile int b = 0;
+        private void write() {
+            x = 5;
+            b = 1;
+        }
+        private void read() {
+            int dummy = b;
+            while (x != 5) {
+            }
+        }
+        public static void main(String[] args) throws Exception {
+            final VolatileExample example = new VolatileExample();
+            Thread thread1 = new Thread(new Runnable() {
+                public void run() {
+                    example.write();
+                }
+            });
+            Thread thread2 = new Thread(new Runnable() {
+                public void run() {
+                    example.read();
+                }
+            });
+            thread1.start();
+            thread2.start();
+            thread1.join();
+            thread2.join();
+        }
+    }
+![volatile](pictures/volatile.png)
+> x并不需要定义为volatile, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程a能看到线程1对x的修改：
+>
+1. 根据代码顺序规则，线程1的x=5; happens-before b=1;; 线程2的int dummy = b; happens-before while(x!=5);
+2. 根据volatile变量规则，线程2的b=1; happens-before int dummy=b;
+3. 根据传递性，x=5; happens-before while(x!=5);
+
+>在JSR-133之前的旧Java内存模型中，虽然不允许volatile变量之间重排序，但旧的Java内存模型仍然会允许volatile变量与普通变量之间重排序。JSR-133则增强了volatile的内存语义：严格限制编译器（在编译器）和处理器（在运行期）对volatile变量与普通变量的重排序，确保volatile的写-读和监视器的释放-获取一样，具有相同的内存语义。
+
+
+
 #### volatile对比synchronzied
 
 **volatile优劣点**
@@ -245,6 +292,7 @@ volatile关键字通过提供“内存屏障”的方式来防止指令被重排
 `volatile`:
   + 不加锁，只保证可见性。
   + volatile声明的变量如果当前值需要用到该值以前的值，那么volatile不起作用。即，count++,count = count + 1 ，都是非原子操作。
+  + volatile 操作不会像锁一样造成阻塞 如果读的次数远大于写，还可以减少同步的开销
 
 `synchronized`:
   + 加锁（同步）机制，既保证可见性又保证原子性
@@ -253,16 +301,17 @@ volatile关键字通过提供“内存屏障”的方式来防止指令被重排
 
 >在需要同步的时候，第一选择应该是synchronized关键字，这是最安全的方式，尝试其他任何方式都是有风险的.在jdK1.5之后，对synchronized同步机制做了很多优化，如：自适应的自旋锁、锁粗化、锁消除、轻量级锁等，使得它的性能有了很大的提升。
 >
->当且仅当满足以下所有条件时，才应该使用volatile变量：
+>当且仅当满足以下所有条件时，才应该使用volatile变量用于线程间通讯：
   1. 对变量的写入操作不依赖变量的当前值，或者你能确保只有单个线程更新变量的值。
   2. 该变量没有包含在具有其他变量的不变式中。
+  3. 读的次数远远大于写。（读操作开销非常低，几乎和非 volatile 读操作一样。而 volatile 写操作的开销要比非 volatile 写操作多很多）
 
 
-## 内存模型 （JMM）
+## 内存模型
 
 在多核处理器中，多个cpu会同时访问共享主存，把对数据进行改变之后更新到各自cpu的缓存里。在这个过程中，代码和指令都会进行重排，并且缓存更新后会延迟更新到共享主存，导致了共享变量的改变顺序发生了变化，程序的行为无法准确预测。为了解决这种不可预测的行为，处理器提供一组机器指令来确保指令的顺序执行，它告诉处理器在读取缓存时可以先更新缓存，改变后立刻同步到主存，也可以要求编译器不要对某点以及周围的指令序列重排。这些确保顺序的指令称为内存屏障，具体的确保措施在程序语言级别的体现就是内存模型的定义。
 这里说的内存模型特指内存、Cache、CPU、写缓冲区、寄存器以及其他的硬件和编译器优化的交互时对读写指令操作提供保护手段以确保读写序。
-### 内存屏障 （Memory Barries）
+### 内存屏障
 
 C++、Java都有各自的共享内存模型，实现上并没有什么差异，只是在一些细节上稍有不同。
 
