@@ -90,3 +90,14 @@ oh-my-zsh 提供极为丰富的插件，在~/.oh-my-zsh/plugins目录下查看�
     - quick-look: 快速预览该文件，类似于在 Finder 中按下空格键；
     man preview: 在 preview 中打开 man page；
 itunes: 命令行操作 iTunes。
+
+
+## mac 环境
+
+### 压缩 & 解压缩
+
++ 安装zsh extract 插件 ：提供各种压缩形式的解压缩（实际还是需要各种解压缩的命令支持）
+  - zsh 中 ~/.zshrc 中 plugins=(... extract)
+  - source ~/.zshrc
+
++ mac下没有unrar,使用 brew install unrar (解压rar文件)
