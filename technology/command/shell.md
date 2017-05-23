@@ -24,6 +24,13 @@
 
 + netstat -a 列出所有端口
 
++ ip 地址
+ifconfig | grep inet
+
++ 追溯DNS解析
+  - host hostname（google.com）  显示域名解析后的ip
+  - dig +trace  hostname    dns 解析过程
+
 ### zsh
 
 **安装**
