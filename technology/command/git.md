@@ -4,9 +4,10 @@
 ### add
 + git add <pathspec>          增加，修改路径下已经track的file，但是忽略删除。
 + git add -u <pathspec>        修改，删除路径下file，但是忽略增加。
-+ git add --all <pathspec>     对路径下文件有 增加，修改，删除操作。 
++ git add --all <pathspec>     对路径下文件有 增加，修改，删除操作。
 
-
+### commit
++ git commit -amend  重命名
 ### diff
 
 + git diff 显示 目前文件 与上次提交的区别 (git add 之前的文件与已提交文件的差别)
@@ -45,6 +46,10 @@
 ### checkout
 + git checkout 分支名|commit摘要    跳转到某个分支或某次commit
 + git checkout -b 分支名         基于当前分支创建一个新的分支（分支名），并跳转过去
+
+### reflog
+
++ git reflog  列出head曾经指向过的所有commit，reset --hard 覆盖的commit也可以找到
 
 
 ### branch

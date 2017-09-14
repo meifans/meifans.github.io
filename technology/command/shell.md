@@ -4,9 +4,15 @@
 + lsof 列出占用文件的进程信息
   + -i:<端口号> 列出符合条件的进程，协议，端口号
   + -p 列出指定进程号所打开的文件
+
++ netstat -anp | grep "端口号"
+
 + cat /etc/redhat-release 查看linux具体版本
++ cat /proc/version        查看内核版本
 
 + systemctl enable/start docker 启动docker服务
+
++ zgrep
 
 + ll 查看权限
   >drwxr-xr-x
@@ -15,6 +21,7 @@
   > 5，6，7(r-x)代表同组的用户权限
   > 8，9，10（r-x）代表其他人的权限
 
++ ps aux | grep 服务名    查看服务是否起来，什么时间起来的
 
 +  压缩
   - tar -xf 文件名   解压缩文件
@@ -31,6 +38,15 @@ ifconfig | grep inet
   - host hostname（google.com）  显示域名解析后的ip
   - dig +trace  hostname    dns 解析过程
 
++ 权限
+  - chmod 755 目录
+
++ 查看log
+  - less 文件名    f 向下，k向上
+  - head -n 1     只显示一条，与grep连用
+
++ 时间戳
+  - date -r 1503486171   把时间戳换成时间
 ### zsh
 
 **安装**
