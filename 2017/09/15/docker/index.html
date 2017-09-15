@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Meifans</title>
+  <title>docker 笔记 | Meifans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Meifans">
+<meta property="og:title" content="docker 笔记">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/docker/index.html">
 <meta property="og:site_name" content="Meifans">
 <meta property="og:description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
-<meta property="og:updated_time" content="2017-09-15T03:54:09.000Z">
+<meta property="og:updated_time" content="2017-09-15T04:00:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Meifans">
+<meta name="twitter:title" content="docker 笔记">
 <meta name="twitter:description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
   
     <link rel="alternate" href="/atom.xml" title="Meifans" type="application/atom+xml">
@@ -73,6 +73,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker 笔记
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p> 安装：curl -sSL <a href="https://get.daocloud.io/docker" target="_blank" rel="external">https://get.daocloud.io/docker</a> | sh</p>
@@ -115,7 +125,7 @@
 <li>host行值为%对应的用户，是允许从外网了连接进来的。localhost 是只允许本地连接</li>
 </ol>
 <p>mysqld -verbose –help | grep bind-address 查看mysql连接</p>
-<p><code>基于mysql8，命令行创建</code><br>主：<br>      docker run –net=meifans -d -p3333:3306 -e MYSQL_ROOT_PASSWORD=123456  –name=node1 mysql:8 –server-id=1 </p>
+<p><code>基于mysql8，命令行创建</code><br>主：<br>      docker run –net=meifans -d -p3333:3306 -e MYSQL_ROOT_PASSWORD=123456  –name=node1 mysql:8 –server-id=1</p>
 <h4 id="在本地直接配置msyql-group-replication实例"><a href="#在本地直接配置msyql-group-replication实例" class="headerlink" title="在本地直接配置msyql_group_replication实例"></a>在本地直接配置msyql_group_replication实例</h4><p>在当前目录初始化mysql：</p>
 <pre><code>1. mkdir data
 2. /usr/local/Cellar/mysql/5.7.18/bin/mysqld --initialize-insecure --basedir=/usr/local/Cellar/mysql/5.7.18 --datadir=$PWD/data/s1
@@ -165,7 +175,7 @@
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          spring 技术指南
         
       </div>
     </a>
@@ -173,7 +183,7 @@
   
     <a href="/2017/09/15/git/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">git 命令笔记</div>
     </a>
   
 </nav>
@@ -210,23 +220,23 @@
       <ul>
         
           <li>
-            <a href="/2017/09/15/service-discovery/">(no title)</a>
+            <a href="/2017/09/15/service-discovery/">浅谈服务发现</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/datebase/">(no title)</a>
+            <a href="/2017/09/15/datebase/">浅谈索引</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/JNDI/">(no title)</a>
+            <a href="/2017/09/15/JNDI/">浅谈 java 中 JNDI</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/spring/">(no title)</a>
+            <a href="/2017/09/15/spring/">spring 技术指南</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/docker/">(no title)</a>
+            <a href="/2017/09/15/docker/">docker 笔记</a>
           </li>
         
       </ul>

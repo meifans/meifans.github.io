@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Meifans</title>
+  <title>浅谈 java 中 JNDI | Meifans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JNDI 概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0">
+  <meta name="description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Meifans">
+<meta property="og:title" content="浅谈 java 中 JNDI">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/JNDI/index.html">
 <meta property="og:site_name" content="Meifans">
-<meta property="og:description" content="JNDI 概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0">
+<meta property="og:description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
 <meta property="og:image" content="http://yoursite.com/2017/09/15/JNDI/pictures/jndi-architecture.png">
-<meta property="og:updated_time" content="2017-09-15T03:55:42.000Z">
+<meta property="og:updated_time" content="2017-09-15T04:01:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Meifans">
-<meta name="twitter:description" content="JNDI 概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0">
+<meta name="twitter:title" content="浅谈 java 中 JNDI">
+<meta name="twitter:description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
 <meta name="twitter:image" content="http://yoursite.com/2017/09/15/JNDI/pictures/jndi-architecture.png">
   
     <link rel="alternate" href="/atom.xml" title="Meifans" type="application/atom+xml">
@@ -75,10 +75,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈 java 中 JNDI
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>JNDI</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="命名（naming）"><a href="#命名（naming）" class="headerlink" title="命名（naming）"></a>命名（naming）</h3><p>计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。<br>一个命名服务允许你通过一个名字找一个对象。</p>
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="命名（naming）"><a href="#命名（naming）" class="headerlink" title="命名（naming）"></a>命名（naming）</h3><p>计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。<br>一个命名服务允许你通过一个名字找一个对象。</p>
 <blockquote>
 <p>计算机中的例子：<br>Internet Domain Name System (DNS) 匹配域名和ip：<br>www.example.com ==&gt; 192.0.2.5<br>文件系统匹配一个文件和一个程序里文件的引用，用来直接访问文件<br>c:\bin\autoexec.bat ==&gt; File Reference<br>这两个例子从广义的范围上说明了命名服务</p>
 </blockquote>
@@ -148,7 +157,7 @@
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          浅谈索引
         
       </div>
     </a>
@@ -156,7 +165,7 @@
   
     <a href="/2017/09/15/spring/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">spring 技术指南</div>
     </a>
   
 </nav>
@@ -193,23 +202,23 @@
       <ul>
         
           <li>
-            <a href="/2017/09/15/service-discovery/">(no title)</a>
+            <a href="/2017/09/15/service-discovery/">浅谈服务发现</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/datebase/">(no title)</a>
+            <a href="/2017/09/15/datebase/">浅谈索引</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/JNDI/">(no title)</a>
+            <a href="/2017/09/15/JNDI/">浅谈 java 中 JNDI</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/spring/">(no title)</a>
+            <a href="/2017/09/15/spring/">spring 技术指南</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/docker/">(no title)</a>
+            <a href="/2017/09/15/docker/">docker 笔记</a>
           </li>
         
       </ul>

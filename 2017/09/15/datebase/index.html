@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Meifans</title>
+  <title>浅谈索引 | Meifans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Meifans">
+<meta property="og:title" content="浅谈索引">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/datebase/index.html">
 <meta property="og:site_name" content="Meifans">
 <meta property="og:description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
 <meta property="og:image" content="http://yoursite.com/2017/09/15/datebase/pictures/relationship.png">
-<meta property="og:updated_time" content="2017-09-15T03:56:24.000Z">
+<meta property="og:updated_time" content="2017-09-15T04:00:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Meifans">
+<meta name="twitter:title" content="浅谈索引">
 <meta name="twitter:description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
 <meta name="twitter:image" content="http://yoursite.com/2017/09/15/datebase/pictures/relationship.png">
   
@@ -74,6 +74,16 @@
   </div>
   <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈索引
+    </h1>
+  
+
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -143,7 +153,7 @@
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          浅谈服务发现
         
       </div>
     </a>
@@ -151,7 +161,7 @@
   
     <a href="/2017/09/15/JNDI/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">浅谈 java 中 JNDI</div>
     </a>
   
 </nav>
@@ -188,23 +198,23 @@
       <ul>
         
           <li>
-            <a href="/2017/09/15/service-discovery/">(no title)</a>
+            <a href="/2017/09/15/service-discovery/">浅谈服务发现</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/datebase/">(no title)</a>
+            <a href="/2017/09/15/datebase/">浅谈索引</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/JNDI/">(no title)</a>
+            <a href="/2017/09/15/JNDI/">浅谈 java 中 JNDI</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/spring/">(no title)</a>
+            <a href="/2017/09/15/spring/">spring 技术指南</a>
           </li>
         
           <li>
-            <a href="/2017/09/15/docker/">(no title)</a>
+            <a href="/2017/09/15/docker/">docker 笔记</a>
           </li>
         
       </ul>
