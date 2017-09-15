@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Meifans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Meifans">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/datebase/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
+<meta property="og:image" content="http://yoursite.com/2017/09/15/datebase/pictures/relationship.png">
+<meta property="og:updated_time" content="2017-09-15T03:56:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Meifans">
+<meta name="twitter:description" content="索引为什么需要索引 (why)数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/15/datebase/pictures/relationship.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Meifans" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Meifans</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-datebase" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/15/datebase/" class="article-date">
+  <time datetime="2017-09-15T03:56:24.000Z" itemprop="datePublished">2017-09-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="为什么需要索引-why"><a href="#为什么需要索引-why" class="headerlink" title="为什么需要索引 (why)"></a>为什么需要索引 (why)</h3><p>数据在磁盘上是以块（也称页）的形式存储的，访问数据的时候会一并访问整个数据块。磁盘上的这些数据块与链表类似，即它们都包含一个数据段和一个指针，指针指向下一个节点（数据块）的内存地址，而且它们都不需要连续存储（即逻辑上相邻的数据块在物理上可以相隔很远）。<br>鉴于很多记录只能做到按一个字段排序，所以要查询某个未经排序的字段，就需要使用线性查找，即要访问N/2个数据块，其中N指的是一个表所涵盖的所有数据块。如果该字段是非键字段（也就是说，不包含唯一值），那么就要搜索整个表空间，即要访问全部N个数据块。<br>然而，对于经过排序的字段，可以使用二分查找，因此只要访问log2 N个数据块。同样，对于已经排过序的非键字段，只要找到更大的值，也就不用再搜索表中的其他数据块了。这样一来，性能就会有实质性的提升。</p>
+<h3 id="什么是索引-what"><a href="#什么是索引-what" class="headerlink" title="什么是索引 (what)"></a>什么是索引 (what)</h3><p>索引是对记录按照多个字段进行排序的一种方式。对表中的某个字段建立索引会创建另一种数据结构，其中保存着字段的值，每个值又指向与它相关的记录。这种索引的数据结构是经过排序的，所以可以使用二分查找，b+树搜索。<br>索引的缺点是占用额外的磁盘空间。因为索引保存在MyISAM数据库中，所以如果为同一个表中的很多字段都建立索引，那这个文件可能会很快膨胀到文件系统规定的上限。</p>
+<blockquote>
+<p>MyISAM为mysql默认的数据库引擎，自从8.0开始，mysql默认的引擎已经改为InnoDB.</p>
+</blockquote>
+<h4 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h4><p>  InnoDB中表数据按照主键顺序存放，聚集索引就是按照每张表的主键构造一颗b+树，叶节点中存有整张表的行记录数据，因此聚集索引的页节点也是数据页。每个数据页都通过一个双向的链表进行链接。<br>  实际的数据页只能按照一棵b+树排序，因此每个表只能有一个聚集索引。</p>
+<blockquote>
+<p>聚集索引并不是按照顺序物理的存储数据，那样维护的成本非常高。<br>它是逻辑上连续的。通过页的双向链表链接，页按照主键排序。注意页内的记录也是通过双向链表维护，物理存储上可以同样不按照主键存储。</p>
+<h4 id="非聚集索引"><a href="#非聚集索引" class="headerlink" title="非聚集索引"></a>非聚集索引</h4><p>   即叶级别不包含行的全部数据。<br>  叶节点：</p>
+<ul>
+<li>键值  索引字段的值</li>
+<li>书签  用来告诉InnoDB，哪里可以找到与索引对应的行数据</li>
+</ul>
+</blockquote>
+<h3 id="索引的原理-（how）"><a href="#索引的原理-（how）" class="headerlink" title="索引的原理 （how）"></a>索引的原理 （how）</h3><p>InnoDB索引是使用b+树来组织的，以每个页（16K）为基本单元,每个页包含有前后页的指针。b+树高扇出，只需要2-3次io即可从数百万的数据中找到指定行所在的页。然后再页内使用二分查找，来锁定具体行。</p>
+<h4 id="聚集索引-1"><a href="#聚集索引-1" class="headerlink" title="聚集索引"></a>聚集索引</h4><p>  <strong>优点</strong></p>
+<ul>
+<li>主键的排序查找和范围查找非常快</li>
+<li><p>可以在索引的页节点上直接找到数据</p>
+<h4 id="非聚集索引-1"><a href="#非聚集索引-1" class="headerlink" title="非聚集索引"></a>非聚集索引</h4><p>通过它来查找数据时，会查找它的b+树，然后通过叶级别的指针获得指向主键索引的主键，然后在通过主键索引（聚集索引）来找到一个完整的行记录。他们的关系如下图所示</p>
+<p><img src="pictures/relationship.png" alt="relationship"></p>
+</li>
+</ul>
+<h3 id="索引使用原则-when"><a href="#索引使用原则-when" class="headerlink" title="索引使用原则 (when)"></a>索引使用原则 (when)</h3><h4 id="数据库层原则"><a href="#数据库层原则" class="headerlink" title="数据库层原则"></a>数据库层原则</h4><ul>
+<li><p>高选择性</p>
+<blockquote>
+<p>某个字段取值很广，几乎没有重复</p>
+</blockquote>
+</li>
+<li><p>取出表中少部分数据</p>
+<blockquote>
+<p>即使某个字段为高选择性，也可能取出很多数据<br>i.e：某个字段表示日期，查询大于某个很小的日期，就可以取出表中大部分数据。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="命令层原则"><a href="#命令层原则" class="headerlink" title="命令层原则"></a>命令层原则</h4><ul>
+<li>为经常被用作查询条件，或要求排序的字段建立索引<ul>
+<li>order by ,group by,distinct 后面的字段</li>
+</ul>
+</li>
+<li>经常用作表连接和查询选择字段建立索引<ul>
+<li>where , join</li>
+</ul>
+</li>
+<li>对于一个存在大量更新的表，索引数目一般不超过3个。<blockquote>
+<p>索引提高了数据访问速度，但也增加了插入，删除，更新的时间。</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/15/datebase/" data-id="cj7lcs6bp00017p1pxjwpu4p9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/15/service-discovery/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/15/JNDI/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/15/service-discovery/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/datebase/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/JNDI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/spring/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/docker/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 赵鹏飞<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

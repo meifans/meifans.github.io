@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Meifans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Spring 面试指南Spring 核心Spring Ioc容器 什么是Ioc 依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。   优势： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Meifans">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/spring/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="Spring 面试指南Spring 核心Spring Ioc容器 什么是Ioc 依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。   优势： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，">
+<meta property="og:updated_time" content="2017-09-15T03:55:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Meifans">
+<meta name="twitter:description" content="Spring 面试指南Spring 核心Spring Ioc容器 什么是Ioc 依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。   优势： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，">
+  
+    <link rel="alternate" href="/atom.xml" title="Meifans" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Meifans</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-spring" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/15/spring/" class="article-date">
+  <time datetime="2017-09-15T03:55:08.000Z" itemprop="datePublished">2017-09-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-面试指南"><a href="#Spring-面试指南" class="headerlink" title="Spring 面试指南"></a>Spring 面试指南</h1><h2 id="Spring-核心"><a href="#Spring-核心" class="headerlink" title="Spring 核心"></a>Spring 核心</h2><h3 id="Spring-Ioc容器"><a href="#Spring-Ioc容器" class="headerlink" title="Spring Ioc容器"></a>Spring Ioc容器</h3><ol>
+<li><p>什么是Ioc</p>
+<p>依赖注入（Dependency Injection），即把某个对象依赖的所有对象注入进去，相比于在对象内直接显式的new出来，把创建依赖对象的权利反转，交给了容器，所以也叫控制反转（Inverse of Control）。</p>
+</li>
+</ol>
+<p><code>优势</code>： 可以根据配置或环境自由决定注入对象的具体类型,增加灵活性。避免了硬编码方便mock，测试方便。</p>
+<ol>
+<li><p>bean 生命周期</p>
+<ol>
+<li><p>寻找bean的BeanDefinition（xml方式或注解Java对象方式），并实例化bean</p>
+<blockquote>
+<p>提供元数据的三种方式</p>
+<ol>
+<li>Xml配置文件</li>
+<li>基于注解的配置</li>
+<li>基于Java的配置</li>
+</ol>
+</blockquote>
+</li>
+<li><p>对bean进行依赖注入。</p>
+</li>
+<li><p>注入实现各种Aware。</p>
+<ul>
+<li>BeanNameAware        注入bean的名字</li>
+<li>BeanClassLoaderAware 注入bean的classloader</li>
+<li>BeanFactoryAware     注入bean所在的factory</li>
+</ul>
+</li>
+<li><p>BeanPostProcessor 的before方法 -&gt; InitializingBean.afterPropertiesSet()（bean的初始化方法） -&gt; BeanPostProcessor 的after方法</p>
+</li>
+<li><p>DisposableBean.destory 释放资源  -&gt; destory (指定的bean销毁方法)</p>
+</li>
+</ol>
+</li>
+<li><p>bean 类型</p>
+<ul>
+<li><code>singleton</code> 单例（默认）</li>
+<li><code>prototype</code> 原型 每个bean都是新的</li>
+<li><code>request</code> 每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
+<li><code>session</code> 在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring   + ApplicationContext情形下有效。</li>
+<li><code>global-session</code> 在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。</li>
+</ul>
+</li>
+<li><p>ApplicationContext 相比 BeanFactory的优势</p>
+<ul>
+<li>支持多于一种配置（不止xml文件）</li>
+<li>支持bean注册观察者，publish event</li>
+<li>I18n …and so on</li>
+</ul>
+</li>
+<li><p>自动装配</p>
+<ul>
+<li><p><code>no</code>:<br>这是Spring框架的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。</p>
+</li>
+<li><p><code>byName</code>:<br>该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</p>
+</li>
+<li><p><code>byType</code>:<br>该选项可以根据bean类型设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的类型自动在在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</p>
+</li>
+<li><p><code>constructor</code>:<br>造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器中没有找到与构造器参数类型一致的bean，那么将会抛出异常。</p>
+</li>
+<li><p><code>autodetect</code>:<br>该模式自动探测使用构造器自动装配或者byType自动装配。首先，首先会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byTpe的自动装配方式。</p>
+</li>
+</ul>
+</li>
+<li><p>常见的ApplicationContext 的实现方式</p>
+<ol>
+<li><p>ClassPathXmlApplicationContext：从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中取得。</p>
+<p>   ApplicationContext context = new ClassPathXmlApplicationContext(“bean.xml”);</p>
+</li>
+<li><p>FileSystemXmlApplicationContext ：由文件系统中的XML配置文件读取上下文。</p>
+<p>   ApplicationContext context = new FileSystemXmlApplicationContext(“bean.xml”);</p>
+</li>
+<li><p>XmlWebApplicationContext：由Web应用的XML文件读取上下文。</p>
+</li>
+</ol>
+</li>
+<li><p>ApplicationContext中的事件类型</p>
+<p>一个bean实现了ApplicationListener接口，当一个ApplicationEvent 被发布以后，bean会自动被通知。</p>
+<ul>
+<li><p>上下文更新事件（ContextRefreshedEvent）：该事件会在ApplicationContext被初始化或者更新时发布。也可以在调用ConfigurableApplicationContext 接口中的refresh()方法时被触发。</p>
+</li>
+<li><p>上下文开始事件（ContextStartedEvent）：当容器调用ConfigurableApplicationContext的Start()方法开始/重新开始容器时触发该事件。</p>
+</li>
+<li><p>上下文停止事件（ContextStoppedEvent）：当容器调用ConfigurableApplicationContext的Stop()方法停止容器时触发该事件。</p>
+</li>
+<li><p>上下文关闭事件（ContextClosedEvent）：当ApplicationContext被关闭时触发该事件。容器被关闭时，其管理的所有单例Bean都被销毁。</p>
+</li>
+<li><p>请求处理事件（RequestHandledEvent）：在Web应用中，当一个http请求（request）结束触发该事件。</p>
+</li>
+<li><p>自定义事件 ： customEvent 继承 ApplicationEvent,customListener实现ApplicationListener接口。</p>
+</li>
+</ul>
+</li>
+<li><p>spring 常用模块</p>
+<ul>
+<li><p>The Core container module</p>
+<blockquote>
+<p>提供 Spring 框架的基本功能。核心容器的主要组件是BeanFactory，它是工厂模式的实现。BeanFactory 使用控制反转 （IOC） 模式将应用程序的配置和依赖性规范与实际的应用程序代码分开。</p>
+</blockquote>
+</li>
+<li><p>Application context module</p>
+<blockquote>
+<p>Spring 上下文是一个配置文件，向 Spring 框架提供上下文信息。Spring 上下文包括企业服务，例如 JNDI、EJB、电子邮件、国际化、校验和调度功能。</p>
+</blockquote>
+</li>
+<li><p>AOP module (Aspect Oriented Programming)</p>
+</li>
+<li><p>JDBC abstraction and DAO module</p>
+<blockquote>
+<p>JDBC DAO 抽象层提供了有意义的异常层次结构，可用该结构来管理异常处理和不同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，并且极大地降低了需要编写的异常代码数量（例如打开和关闭连接）。Spring DAO 的面向 JDBC 的异常遵从通用的 DAO 异常层次结构。</p>
+</blockquote>
+</li>
+<li><p>O/R mapping integration module (Object/Relational)</p>
+<blockquote>
+<p>Spring 框架插入了若干个 ORM 框架，从而提供了 ORM 的对象关系工具，其中包括 JDO、Hibernate 和 iBatis SQL Map。所有这些都遵从 Spring 的通用事务和 DAO 异常层次结构。</p>
+</blockquote>
+</li>
+<li><p>Web module</p>
+<blockquote>
+<p>Web 上下文模块建立在应用程序上下文模块之上，为基于 Web 的应用程序提供了上下文。Web 模块还简化了处理多部分请求以及将请求参数绑定到域对象的工作。</p>
+</blockquote>
+</li>
+<li><p>MVC framework module</p>
+<blockquote>
+<p>MVC 框架是一个全功能的构建 Web 应用程序的 MVC 实现。通过策略接口，MVC 框架变成为高度可配置的，MVC 容纳了大量视图技术，其中包括 JSP、Velocity、Tiles、iText 和 POI。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Spring-事务管理"><a href="#Spring-事务管理" class="headerlink" title="Spring 事务管理"></a>Spring 事务管理</h3><ul>
+<li>类型 ：声明式事务管理、编程式事务管理。</li>
+<li>Advice类型：</li>
+</ul>
+<h2 id="Spring-新特性"><a href="#Spring-新特性" class="headerlink" title="Spring 新特性"></a>Spring 新特性</h2><h2 id="Spring-对orm支持"><a href="#Spring-对orm支持" class="headerlink" title="Spring 对orm支持"></a>Spring 对orm支持</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/15/spring/" data-id="cj7lcs6c200067p1p8lnoxqkl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/15/JNDI/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/15/docker/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/15/service-discovery/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/datebase/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/JNDI/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/spring/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/15/docker/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 赵鹏飞<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
