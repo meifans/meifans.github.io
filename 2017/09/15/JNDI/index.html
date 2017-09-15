@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈 java 中 JNDI">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/JNDI/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
+<meta property="og:image" content="http://yoursite.com/2017/09/15/JNDI/pictures/jndi-architecture.png">
+<meta property="og:updated_time" content="2017-09-15T04:01:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈 java 中 JNDI">
+<meta name="twitter:description" content="概念命名（naming）计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。一个命名服务允许你通过一个名字找一个对象。  计算机中的例子：Internet Domain Name System (DNS) 匹配域名和ip：www.example.com ==&amp;gt; 192.0.2.5文">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/15/JNDI/pictures/jndi-architecture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/JNDI/"/>
+
+
+
+
+
+  <title>浅谈 java 中 JNDI | Meifans</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Meifans</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/JNDI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赵鹏飞">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Meifans">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅谈 java 中 JNDI</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T11:55:42+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="命名（naming）"><a href="#命名（naming）" class="headerlink" title="命名（naming）"></a>命名（naming）</h3><p>计算机系统的一个基础设置就是命名服务–名字与一个对象联系，可以通过这个名字得到对象。比如，当你发邮件时，需要提供一个收件人地址，当访问一个文件时，需要提供它的名字。<br>一个命名服务允许你通过一个名字找一个对象。</p>
+<blockquote>
+<p>计算机中的例子：<br>Internet Domain Name System (DNS) 匹配域名和ip：<br>www.example.com ==&gt; 192.0.2.5<br>文件系统匹配一个文件和一个程序里文件的引用，用来直接访问文件<br>c:\bin\autoexec.bat ==&gt; File Reference<br>这两个例子从广义的范围上说明了命名服务</p>
+</blockquote>
+<h4 id="名字组成"><a href="#名字组成" class="headerlink" title="名字组成"></a>名字组成</h4><p>为了在一个命名系统中寻找对象，它规定的命名规范（systems naming convention）必须要遵守。<br>| 命名系统 | 分隔符 | 名字 |<br>| — | — | — |<br>| UNIX file system | “/“ | /usr/hello |<br>| DNS | “.” | sales.wiz.com |<br>| LDAP | “,”and”=” | cn=Rosanna Lee , o=Sun,c=US |</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>一个目录系统既联系了名字与对象，也连接了对象和属性。<br>不仅可以通过名字找到对象，还可以获得对象的属性或者基于属性搜寻对象。</p>
+<h2 id="JNDI概览"><a href="#JNDI概览" class="headerlink" title="JNDI概览"></a>JNDI概览</h2><p> Java Naming and Directory Interface™ (JNDI) 是一个提供命名和目录服务的程序接口</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>JNDI架构包含一组api和一组服务提供接口 service provider interface (SPI)。Java应用使用JNDIapi访问多个命名和目录服务。<br>SPI实现了可插拔式的命名、目录服务，允许Java通过JNDIapi访问这些服务。</p>
+<p><img src="pictures/jndi-architecture.png" alt="JNDI架构"></p>
+<h3 id="包"><a href="#包" class="headerlink" title="包"></a>包</h3><p>JDK包含下面这些服务提供者：</p>
+<ul>
+<li>LDAP</li>
+<li>Common Object Request Broker Architecture (CORBA) Common Object Services (COS) name service</li>
+<li>Java Remote Method Invocation (RMI) Registry</li>
+<li>Domain Name Service (DNS)</li>
+</ul>
+<p>JNDI分成5个包</p>
+<ul>
+<li>javax.naming</li>
+<li>javax.naming.directory</li>
+<li>javax.naming.ldap</li>
+<li>javax.naming.event</li>
+<li>javax.naming.spi</li>
+</ul>
+<h4 id="Naming包"><a href="#Naming包" class="headerlink" title="Naming包"></a>Naming包</h4><ol>
+<li>Context   核心接口，提供寻找对象，绑定，重命名，创建和销毁功能。<ul>
+<li>lookup   提供名字返回对象</li>
+<li>bindings 绑定名字和对象</li>
+<li>name     重命名</li>
+</ul>
+</li>
+<li>InitialContext 为服务提供启动点</li>
+</ol>
+<h4 id="Directory-和LDAP包"><a href="#Directory-和LDAP包" class="headerlink" title="Directory 和LDAP包"></a>Directory 和LDAP包</h4><p><strong>Directory</strong></p>
+<p>javax.naming.directory  继承了javax.naming，提供了命名和目录服务。这个包允许应用使用指定的属性检索保存在目录中的对象。<br>DirContext 代表一个目录context，定义了检查和更细属性的方法，通过操作一个目录实体。</p>
+<ul>
+<li>Attributes 可以检索一个directory entity的属性，可以增删改查。</li>
+</ul>
+<p><strong>LDAP</strong></p>
+<p>javax.naming.ldap 为LDAP v3特性的应用提供了支持。事实上，绝大多数应用使用LDAP去找javax.naming.directory包就足够了，完全不需要ldap包.</p>
+<h4 id="Event和Service-Provider-包"><a href="#Event和Service-Provider-包" class="headerlink" title="Event和Service Provider 包"></a>Event和Service Provider 包</h4><p><strong>event</strong></p>
+<p>javax.naming.event 包支持命名和目录服务中的事件通知</p>
+<ul>
+<li>Events 一个NamingEvent 代表一个命名或目录服务产生的事件，</li>
+<li>Listeners NamingListener 倾听者 有不同的实现</li>
+</ul>
+<p><strong>ServiceProvider</strong></p>
+<p>javax.naming.spi 包用来为不同的服务提供者提供挂钩，以便使用JNDI可以访问相应的服务。</p>
+<ol>
+<li>Plug-In Architecture</li>
+<li>Java Object Support</li>
+<li>Multiple Naming Systems</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/15/spring/" rel="next" title="spring 技术指南">
+                <i class="fa fa-chevron-left"></i> spring 技术指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/datebase/" rel="prev" title="浅谈索引">
+                浅谈索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">赵鹏飞</p>
+            <p class="site-description motion-element" itemprop="description">技术 博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命名（naming）"><span class="nav-number">1.1.</span> <span class="nav-text">命名（naming）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#名字组成"><span class="nav-number">1.1.1.</span> <span class="nav-text">名字组成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录"><span class="nav-number">1.2.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JNDI概览"><span class="nav-number">2.</span> <span class="nav-text">JNDI概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">2.1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包"><span class="nav-number">2.2.</span> <span class="nav-text">包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Naming包"><span class="nav-number">2.2.1.</span> <span class="nav-text">Naming包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Directory-和LDAP包"><span class="nav-number">2.2.2.</span> <span class="nav-text">Directory 和LDAP包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Event和Service-Provider-包"><span class="nav-number">2.2.3.</span> <span class="nav-text">Event和Service Provider 包</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵鹏飞</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

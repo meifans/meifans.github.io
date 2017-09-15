@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="常用命令 lsof 列出占用文件的进程信息  -i:&amp;lt;端口号&amp;gt; 列出符合条件的进程，协议，端口号 -p 列出指定进程号所打开的文件   netstat -anp | grep “端口号”  cat /etc/redhat-release 查看linux具体版本  cat /proc/version        查看内核版本  systemctl enable/start docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux&#x2F;mac 命令笔记">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/shell/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="常用命令 lsof 列出占用文件的进程信息  -i:&amp;lt;端口号&amp;gt; 列出符合条件的进程，协议，端口号 -p 列出指定进程号所打开的文件   netstat -anp | grep “端口号”  cat /etc/redhat-release 查看linux具体版本  cat /proc/version        查看内核版本  systemctl enable/start docker">
+<meta property="og:updated_time" content="2017-09-15T04:02:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux&#x2F;mac 命令笔记">
+<meta name="twitter:description" content="常用命令 lsof 列出占用文件的进程信息  -i:&amp;lt;端口号&amp;gt; 列出符合条件的进程，协议，端口号 -p 列出指定进程号所打开的文件   netstat -anp | grep “端口号”  cat /etc/redhat-release 查看linux具体版本  cat /proc/version        查看内核版本  systemctl enable/start docker">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/shell/"/>
+
+
+
+
+
+  <title>linux/mac 命令笔记 | Meifans</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Meifans</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赵鹏飞">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Meifans">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux/mac 命令笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T11:54:09+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li><p>lsof 列出占用文件的进程信息</p>
+<ul>
+<li>-i:&lt;端口号&gt; 列出符合条件的进程，协议，端口号</li>
+<li>-p 列出指定进程号所打开的文件</li>
+</ul>
+</li>
+<li><p>netstat -anp | grep “端口号”</p>
+</li>
+<li><p>cat /etc/redhat-release 查看linux具体版本</p>
+</li>
+<li><p>cat /proc/version        查看内核版本</p>
+</li>
+<li><p>systemctl enable/start docker 启动docker服务</p>
+</li>
+<li><p>zgrep</p>
+</li>
+<li><p>ll 查看权限</p>
+<blockquote>
+<p>drwxr-xr-x<br>第一位代表文件类型，d:文件目录，l:链接文件,-:是普通文件，p:是管道<br>2，3，4(rwx)代表文件拥有者的权限，r是读，w是写，x是执行<br>5，6，7(r-x)代表同组的用户权限<br>8，9，10（r-x）代表其他人的权限</p>
+</blockquote>
+</li>
+<li><p>ps aux | grep 服务名    查看服务是否起来，什么时间起来的</p>
+</li>
+<li><p>压缩</p>
+<ul>
+<li>tar -xf 文件名   解压缩文件</li>
+<li>unzip 文件名  解.zip</li>
+</ul>
+</li>
+<li><p>mv 原文件 新名字    重命名和移动文件</p>
+</li>
+<li><p>netstat -a 列出所有端口</p>
+</li>
+<li><p>ip 地址<br>ifconfig | grep inet</p>
+</li>
+<li><p>追溯DNS解析</p>
+<ul>
+<li>host hostname（google.com）  显示域名解析后的ip</li>
+<li>dig +trace  hostname    dns 解析过程</li>
+</ul>
+</li>
+<li><p>权限</p>
+<ul>
+<li>chmod 755 目录</li>
+</ul>
+</li>
+<li><p>查看log</p>
+<ul>
+<li>less 文件名    f 向下，k向上</li>
+<li>head -n 1     只显示一条，与grep连用</li>
+</ul>
+</li>
+<li><p>时间戳</p>
+<ul>
+<li>date -r 1503486171   把时间戳换成时间<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3></li>
+</ul>
+</li>
+</ul>
+<p><strong>安装</strong></p>
+<pre><code>brew install zsh
+chsh -s `which zsh`
+</code></pre><h4 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h4><p>zsh 不仅支持普通 alias，还支持针对文件类型的 alias。我配置的文件类型 alias 如下：</p>
+<pre><code>alias -s gz=&apos;tar -xzvf&apos;
+alias -s tgz=&apos;tar -xzvf&apos;
+alias -s zip=&apos;unzip&apos;
+alias -s bz2=&apos;tar -xjvf&apos;
+alias -s php=vi
+alias -s py=vi
+alias -s rb=vi
+alias -s html=vi
+alias gcid=&quot;git log | head -1 | awk &apos;{print substr(\$2,1,7)}&apos; | pbcopy&quot;
+</code></pre><p>配置完毕之后，在 zsh 下直接输入xxx.rb，将自动用 vi 打开，直接输入xxx.tgz，将直接按照tar -xzvf解压。最后一个gcid将当前 git 项目的第一个 commit 的 id 复制到系统剪切板（pbcopy是 Mac 下的复制到系统剪切板命令，linux 请参考相应的发行版更改），在执行 rebase 的时候特别方便。</p>
+<h4 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h4><ul>
+<li>tar -      按tab自动补全参数，命令，路径</li>
+<li>kill java  按tab会出现Java程序的进程号</li>
+</ul>
+<h4 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h4><ul>
+<li>d        显示当前session访问过的目录</li>
+<li>目录      无需cd，直接输入目录。</li>
+<li>..       表示后退一级目录，../../后退两级</li>
+</ul>
+<h4 id="历史记录"><a href="#历史记录" class="headerlink" title="历史记录"></a>历史记录</h4><p><strong>跨session共享</strong></p>
+<ul>
+<li>git-上   搜索用过的所有git命令</li>
+</ul>
+<h4 id="通配符搜索"><a href="#通配符搜索" class="headerlink" title="通配符搜索"></a>通配符搜索</h4><ul>
+<li>ls *.md   搜索当前目录下的md文件</li>
+</ul>
+<h4 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh-my-zsh"></a>oh-my-zsh</h4><p>oh-my-zsh 是最为流行的 zsh 配置文件，提供了大量的主题和插件，极大的拓展了 zsh 的功能，推动了 zsh 的流行，有点类似于 rails 之于 ruby。</p>
+<pre><code># install
+# via curl
+sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+# via wget
+sh -c &quot;$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)&quot;
+</code></pre><p>安装之后，source ~/.zshrc使之生效</p>
+<p><strong>主题</strong></p>
+<p>oh-my-zsh 内置了大量主题，可在~/.oh-my-zsh/themes中查看具体的配置。</p>
+<p><strong>插件</strong></p>
+<p>oh-my-zsh 提供极为丰富的插件，在~/.oh-my-zsh/plugins目录下查看具体的配置。在.zshrc中写入plugin(git autojump osx)即可使用插件</p>
+<ul>
+<li><p>git 精简 git 命令，减少输入字符数。参见 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git" target="_blank" rel="external">Plugin:git</a>。该插件提供的快捷命令比较多，挑几个常用和好记的记忆即可，不必全记。</p>
+</li>
+<li><p><a href="https://github.com/wting/autojump" target="_blank" rel="external">autojump</a>  按照你的使用频率记录路径，使得目录的跳转更为方便。安装brew install autojump。如需跳转到包含 ‘foo’ 的目录，执行j foo，这是最基础，也是最常用的命令。除此之外，还有jc, jo, jco命令，查看官网文档获取更多的使用方法。</p>
+</li>
+<li><p>OSX 该插件增强 Mac 下的使用体验，提供了如下命令：</p>
+<ul>
+<li>cdf: 在 Finder 中打开要 cd 的目录；</li>
+<li>quick-look: 快速预览该文件，类似于在 Finder 中按下空格键；<br>man preview: 在 preview 中打开 man page；<br>itunes: 命令行操作 iTunes。</li>
+</ul>
+</li>
+</ul>
+<h2 id="mac-环境"><a href="#mac-环境" class="headerlink" title="mac 环境"></a>mac 环境</h2><h3 id="压缩-amp-解压缩"><a href="#压缩-amp-解压缩" class="headerlink" title="压缩 &amp; 解压缩"></a>压缩 &amp; 解压缩</h3><ul>
+<li><p>安装zsh extract 插件 ：提供各种压缩形式的解压缩（实际还是需要各种解压缩的命令支持）</p>
+<ul>
+<li>zsh 中 ~/.zshrc 中 plugins=(… extract)</li>
+<li>source ~/.zshrc</li>
+</ul>
+</li>
+<li><p>mac下没有unrar,使用 brew install unrar (解压rar文件)</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/15/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/git/" rel="prev" title="git 命令笔记">
+                git 命令笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">赵鹏飞</p>
+            <p class="site-description motion-element" itemprop="description">技术 博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh"><span class="nav-number">1.1.</span> <span class="nav-text">zsh</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#别名"><span class="nav-number">1.1.1.</span> <span class="nav-text">别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动补全"><span class="nav-number">1.1.2.</span> <span class="nav-text">自动补全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跳转"><span class="nav-number">1.1.3.</span> <span class="nav-text">跳转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#历史记录"><span class="nav-number">1.1.4.</span> <span class="nav-text">历史记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通配符搜索"><span class="nav-number">1.1.5.</span> <span class="nav-text">通配符搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oh-my-zsh"><span class="nav-number">1.1.6.</span> <span class="nav-text">oh-my-zsh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac-环境"><span class="nav-number">2.</span> <span class="nav-text">mac 环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩-amp-解压缩"><span class="nav-number">2.1.</span> <span class="nav-text">压缩 & 解压缩</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵鹏飞</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="服务发现什么是服务发现？ 服务发现（组件）记录了分布式系统中所有服务的信息，其他服务可以据此找到这些服务。DNS就是一个服务发现的例子，但是复杂系统的服务发现（组件）提供更多的功能，服务元数据存储、健康监控、多种查询和实时更新等。 不同的使用情境，服务发现的含义也不同。例如，网络设备发现、零配置网络（ rendezvous ）发现和 SOA 发现等。无论是哪一种使用情境，服务发现提供了一种协调机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈服务发现">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/service-discovery/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="服务发现什么是服务发现？ 服务发现（组件）记录了分布式系统中所有服务的信息，其他服务可以据此找到这些服务。DNS就是一个服务发现的例子，但是复杂系统的服务发现（组件）提供更多的功能，服务元数据存储、健康监控、多种查询和实时更新等。 不同的使用情境，服务发现的含义也不同。例如，网络设备发现、零配置网络（ rendezvous ）发现和 SOA 发现等。无论是哪一种使用情境，服务发现提供了一种协调机制">
+<meta property="og:updated_time" content="2017-09-15T04:02:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈服务发现">
+<meta name="twitter:description" content="服务发现什么是服务发现？ 服务发现（组件）记录了分布式系统中所有服务的信息，其他服务可以据此找到这些服务。DNS就是一个服务发现的例子，但是复杂系统的服务发现（组件）提供更多的功能，服务元数据存储、健康监控、多种查询和实时更新等。 不同的使用情境，服务发现的含义也不同。例如，网络设备发现、零配置网络（ rendezvous ）发现和 SOA 发现等。无论是哪一种使用情境，服务发现提供了一种协调机制">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/service-discovery/"/>
+
+
+
+
+
+  <title>浅谈服务发现 | Meifans</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Meifans</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/service-discovery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赵鹏飞">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Meifans">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅谈服务发现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T11:56:38+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h1><h2 id="什么是服务发现？"><a href="#什么是服务发现？" class="headerlink" title="什么是服务发现？"></a>什么是服务发现？</h2><ul>
+<li>服务发现（组件）记录了分布式系统中所有服务的信息，其他服务可以据此找到这些服务。DNS就是一个服务发现的例子，但是复杂系统的服务发现（组件）提供更多的功能，服务元数据存储、健康监控、多种查询和实时更新等。</li>
+<li>不同的使用情境，服务发现的含义也不同。例如，网络设备发现、零配置网络（ rendezvous ）发现和 SOA 发现等。无论是哪一种使用情境，服务发现提供了一种协调机制，方便服务的发布和查找。</li>
+</ul>
+<h2 id="服务发现的关键特性"><a href="#服务发现的关键特性" class="headerlink" title="服务发现的关键特性"></a>服务发现的关键特性</h2><ol>
+<li>服务发现是支撑大规模 SOA 的核心服务，它必须是高可用的，提供注册、目录和查找三大关键特性，仅仅提供服务目录是不够的。 服务元数据存储是服务发现的关键，因为复杂的服务提供了多种服务接口和端口，部署环境也比较复杂。一旦服务发现组件存储了大量元数据，它就必须提供强大的查询功能，包括服务健康和其它状态的查询。</li>
+</ol>
+<h2 id="服务发现的优势"><a href="#服务发现的优势" class="headerlink" title="服务发现的优势"></a>服务发现的优势</h2><ol>
+<li>零配置 ：不用使用硬编码的网络地址，只需服务的名字（有时甚至连名字都不用）就能使用服务。在现代的体系架构中，单个服务实例的启动和销毁很常见，所以应该做到：无需了解整个架构的部署拓扑，就能找到这个实例。</li>
+</ol>
+<h2 id="服务发现解决方案"><a href="#服务发现解决方案" class="headerlink" title="服务发现解决方案"></a>服务发现解决方案</h2><ul>
+<li><p>DNS ：小规模系统可以先使用 DNS 作为服务发现手段。一旦服务节点的启动和销毁变得更加动态， DNS 就有问题了，因为 DNS 记录传播的速度可能跟不上服务节点变化的速度。</p>
+</li>
+<li><p>ZooKeeper ：大概是最成熟的配置存储方案，它的历史比较长，提供了包括配置管理、领导人选举和分布式锁在内的完整解决方案。因此， ZooKeeper 是非常有竞争力的通用的服务发现解决方案，当然，它也显得过于复杂。</p>
+<blockquote>
+<p>etcd 和 doozerd 是新近出现的服务发现解决方案，它们与 ZooKeeper 具有相似的架构和功能，因此可与 ZooKeeper 互换使用。</p>
+</blockquote>
+</li>
+<li><p>Consul : Consul 是一种更新的服务发现解决方案。除了服务发现，它还提供了配置管理和一种键值存储。 Consul 提供了服务节点的健康检查功能，支持使用 DNS SRV 查找服务，这大大增强了它与其它系统的互操作性。</p>
+<blockquote>
+<p>Consul 与 ZooKeeper 的主要区别是： Consul 提供了 DNS 和 HTTP 两种 API ，而 ZooKeeper 只支持专门客户端的访问。</p>
+</blockquote>
+</li>
+<li><p>Eureka :  AP( Availability and Partition ) 系统，在netflix经过了检验。当出现网络分区时，选择可用性，而不是一致性。</p>
+</li>
+</ul>
+<h2 id="实施服务发现最大的挑战？"><a href="#实施服务发现最大的挑战？" class="headerlink" title="实施服务发现最大的挑战？"></a>实施服务发现最大的挑战？</h2><p>服务发现很复杂，这种复杂性源自分布式系统的复杂性。</p>
+<p>一开始，你可以用一个配置文件实现服务发现，这个文件中包含了所有服务的名字、 IP 地址和端口等信息。当系统变得更加动态后，你就要把服务发现从静态配置迁移到一个真正的解决方案。这个迁移过程，并不像一般人所想的那么容易。最大的一项挑战是无从知晓所选的服务发现系统的侵入性如何：一旦选定一个服务发现系统，就很难再改用其它的服务发现系统，因此，一开始就必须选择正确的解决方案。</p>
+<p>很多服务发现系统都实现了某种形式的分布式共识算法，保证即使有节点失效系统仍然能够正常运转。但是，这些算法是出名地难实现，关键是要识别出分布式系统中失效的节点，这很困难。如果不能正确地识别，就不会正确地实现分布式共识算法。</p>
+<h2 id="已有的系统如何集成服务发现功能"><a href="#已有的系统如何集成服务发现功能" class="headerlink" title="已有的系统如何集成服务发现功能"></a>已有的系统如何集成服务发现功能</h2><p>第一步，让服务的客户无需了解服务的具体部署细节，通过查询外部的服务信息存储来找到服务。一开始简单地使用属性保存服务的元数据就可以了，随着系统变得更加动态，再升级到使用外部的服务发现系统。</p>
+<p>一旦选定了服务发现的机制（网络或者服务），理解了系统的优化点（这是最难的部分），接下来只要集成注册和查找组件就可以了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/15/datebase/" rel="next" title="浅谈索引">
+                <i class="fa fa-chevron-left"></i> 浅谈索引
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">赵鹏飞</p>
+            <p class="site-description motion-element" itemprop="description">技术 博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#服务发现"><span class="nav-number">1.</span> <span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是服务发现？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是服务发现？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现的关键特性"><span class="nav-number">1.2.</span> <span class="nav-text">服务发现的关键特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现的优势"><span class="nav-number">1.3.</span> <span class="nav-text">服务发现的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务发现解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">服务发现解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实施服务发现最大的挑战？"><span class="nav-number">1.5.</span> <span class="nav-text">实施服务发现最大的挑战？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已有的系统如何集成服务发现功能"><span class="nav-number">1.6.</span> <span class="nav-text">已有的系统如何集成服务发现功能</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵鹏飞</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

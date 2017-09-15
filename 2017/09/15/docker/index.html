@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker 笔记">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/docker/index.html">
+<meta property="og:site_name" content="Meifans">
+<meta property="og:description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
+<meta property="og:updated_time" content="2017-09-15T04:00:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker 笔记">
+<meta name="twitter:description" content="安装CentOS 安装：curl -sSL https://get.daocloud.io/docker | sh sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-‘EOF’[dockerrepo]name=Docker Repositorybaseurl=https://mirrors.tuna.tsinghua.edu.cn/docker/yum/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/docker/"/>
+
+
+
+
+
+  <title>docker 笔记 | Meifans</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Meifans</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赵鹏飞">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Meifans">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker 笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T11:54:09+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p> 安装：curl -sSL <a href="https://get.daocloud.io/docker" target="_blank" rel="external">https://get.daocloud.io/docker</a> | sh</p>
+<p>sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-‘EOF’<br>[dockerrepo]<br>name=Docker Repository<br>baseurl=<a href="https://mirrors.tuna.tsinghua.edu.cn/docker/yum/repo/centos7" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/docker/yum/repo/centos7</a><br>enabled=1<br>gpgcheck=1<br>gpgkey=<a href="https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/docker/yum/gpg</a><br>EOF</p>
+<h2 id="运行服务"><a href="#运行服务" class="headerlink" title="运行服务"></a>运行服务</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><h3 id="运行mysql-instance"><a href="#运行mysql-instance" class="headerlink" title="运行mysql instance"></a>运行mysql instance</h3><ol>
+<li>docker pull mysql:latest (或者mariadb) 也可不写，默认最新的tag</li>
+<li><p>docker run –name master -p 3306:3306  -e MYSQL_ROOT_PASSWORD=123456  -e REPLICATION_MASTER=true -d mysql:latest</p>
+<blockquote>
+<p>mysql:latest 一定要在最后，不然 -e 之类的参数会作为启动mysql的参数传入，而不是启动镜像的参数，导致错误ba</p>
+</blockquote>
+</li>
+<li><p>mysql -h127.0.0.1 -P3306 -uroot -p123456  连接master</p>
+<blockquote>
+<p> 或者通过 docker exec -it containerId /bin/bash  进入容器命令行<br> 在通过 mysql -uroot -pgroup-replication 使用刚才设置的root密码进入mysql控制台,exit退出控制台，再次exit退出docker      </p>
+</blockquote>
+</li>
+</ol>
+<h4 id="mysql-group-replication-docker"><a href="#mysql-group-replication-docker" class="headerlink" title="mysql group replication docker"></a>mysql group replication docker</h4><p>以为mysql group replication 要求集群在一个子网中。所以首先使用docker 创建子网。</p>
+<ol>
+<li><p>docker network create 网络名</p>
+</li>
+<li><p>docker run -d –net=网络名 -p 3306:3306 –name=master perconalab/mysql-group-replication –loose_replication_boostrap_group=ON</p>
+<blockquote>
+<p>这里起了主节点，叫master</p>
+</blockquote>
+</li>
+<li><p>docker run -d –net=网络名 –name=slave-1 perconalab/mysql-group-replication –loose_replication_group_seeds=’master:6606’</p>
+<blockquote>
+<p>这里起了从节点，叫slave-1</p>
+</blockquote>
+</li>
+<li><p>允许从本地访问mysql集群的用户为 rpl_user 密码：rpl_pass</p>
+</li>
+</ol>
+<p><code>从本地无法连接起的mysql集群</code></p>
+<ol>
+<li>docker exec -it containerId bin/bash</li>
+<li>mysql -uroot</li>
+<li>select host,user from mysql.user;</li>
+<li>host行值为%对应的用户，是允许从外网了连接进来的。localhost 是只允许本地连接</li>
+</ol>
+<p>mysqld -verbose –help | grep bind-address 查看mysql连接</p>
+<p><code>基于mysql8，命令行创建</code><br>主：<br>      docker run –net=meifans -d -p3333:3306 -e MYSQL_ROOT_PASSWORD=123456  –name=node1 mysql:8 –server-id=1</p>
+<h4 id="在本地直接配置msyql-group-replication实例"><a href="#在本地直接配置msyql-group-replication实例" class="headerlink" title="在本地直接配置msyql_group_replication实例"></a>在本地直接配置msyql_group_replication实例</h4><p>在当前目录初始化mysql：</p>
+<pre><code>1. mkdir data
+2. /usr/local/Cellar/mysql/5.7.18/bin/mysqld --initialize-insecure --basedir=/usr/local/Cellar/mysql/5.7.18 --datadir=$PWD/data/s1
+
+3. cd data/s1   touch s1.cnf
+4. atom s1.cnf                 添加配置
+
+5. /usr/local/Cellar/mysql/5.7.18/bin/mysqld --defaults-file=/Users/pengfei.zhao/Project/mysql-group-replication/data/s1/s1.cnf
+
+6. mysql -uroot -p -S /usr/local/Cellar/mysql/5.7.18/s1.sock       连接这个mysql instance
+</code></pre><p>创建用于组复制的用户：<br>      SET SQL_LOG_BIN=0;<br>      CREATE USER rpl_user@’%’;<br>      GRANT REPLICATION SLAVE ON <em>.</em> TO rpl_user@’%’ IDENTIFIED BY ‘rpl_pass’;<br>      FLUSH PRIVILEGES;<br>      SET SQL_LOG_BIN=1;<br>      CHANGE MASTER TO MASTER_USER=’rpl_user’, MASTER_PASSWORD=’rpl_pass’ FOR   CHANNEL’group_replication_recovery’;</p>
+<p>启动组复制：<br>      INSTALL PLUGIN group_replication SONAME ‘group_replication.so’;<br>      SET GLOBAL group_replication_bootstrap_group=ON;                      <strong>只在第一个server时使用，其后server不适用</strong><br>      START GROUP_REPLICATION;<br>      SET GLOBAL group_replication_bootstrap_group=OFF;                      <strong>只在第一个server时使用，其后server不适用</strong></p>
+<pre><code>&gt;要启动组，请指示 server s1 引导组，然后启动组复制程序。 此引导应仅由单个 sever 独立完 成，该 server 启动组并且只启动一次。 这就是为什么引导配置选项的值不保存在配置文件中的 原因。 如果将其保存在配置文件中，则在重新启动时，server 会自动引导具有相同名称的第二 个组。 这将导致两个不同的组具有相同的名称。 同样的道理适用于停止和重新启动插件，并且 此选项设置为 ON。
+</code></pre><p>添加数据：<br>      CREATE DATABASE test;<br>      use test<br>      CREATE TABLE t1 (c1 INT PRIMARY KEY, c2 TEXT NOT NULL);<br>      INSERT INTO t1 VALUES (1, ‘meifans’);<br>      SELECT * FROM t1;<br>      show binlog events;</p>
+<p>查看用户<br>      select host,user from mysql.user;<br>验证binlog<br>      show binlog events;<br>验证组成员加入<br>      select * from performance_schema.replication_group_members;<br>验证server2已同步<br>      show databases like ‘test’;</p>
+<p>创建命令</p>
+<p>docker run –net=meifans -d -p3333:3306 -e MYSQL_ROOT_PASSWORD=123456 -v my.cnf:/etc/my.cnf –name=node1 mysql:8 –server-id=1</p>
+<h2 id="日常命令"><a href="#日常命令" class="headerlink" title="日常命令"></a>日常命令</h2><ul>
+<li><p>docker ps 列出运行的服务</p>
+<ul>
+<li>-a 列出所有容器，包括未运行的。</li>
+</ul>
+</li>
+<li><p>docker images 列出所有</p>
+</li>
+</ul>
+<h2 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h2><ul>
+<li>docker exec -it container-id 或者 image bash  进入运行中服务的环境里，可以env查看环境设置等。<blockquote>
+<p>也可用 docker inspect container-id 来查看env<br>+</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/15/git/" rel="next" title="git 命令笔记">
+                <i class="fa fa-chevron-left"></i> git 命令笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/spring/" rel="prev" title="spring 技术指南">
+                spring 技术指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">赵鹏飞</p>
+            <p class="site-description motion-element" itemprop="description">技术 博客</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS"><span class="nav-number">1.1.</span> <span class="nav-text">CentOS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行服务"><span class="nav-number">2.</span> <span class="nav-text">运行服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-number">2.1.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行mysql-instance"><span class="nav-number">2.2.</span> <span class="nav-text">运行mysql instance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql-group-replication-docker"><span class="nav-number">2.2.1.</span> <span class="nav-text">mysql group replication docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在本地直接配置msyql-group-replication实例"><span class="nav-number">2.2.2.</span> <span class="nav-text">在本地直接配置msyql_group_replication实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日常命令"><span class="nav-number">3.</span> <span class="nav-text">日常命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赵鹏飞</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
