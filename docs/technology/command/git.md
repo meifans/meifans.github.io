@@ -24,12 +24,18 @@
   + 各个参数可以组合使用 比如 git diff 分支名 分支名  --stat ，快速判断两个分支之间的不同的文件。
   + 分清楚暂存区和commit的区别
 
-### log
+### 记录
 + git log 显示提交历史
 + git log --oneline 把每次提交压缩成一行显示
 + git log --stat   显示每次提交的改动了那些文件 （用于快速查看提交改动了那些文件，而不关心具体如何改动）
 + git log --patch  显示每次提交之间的改动（也就是每次提交和上次提交相比的改动）
 + git log graph --all --decorate --oneline  表示提交结构的样子
++ git log --author="$(git config --get user.name)" --no-merges --since=1am --stat  统计一天代码行数
+git log --author="$(git config --get user.name)" --no-merges --since=1am --shortstat 统计总数
+git log --author="$(git config --get user.name)" --no-merges --pretty=tformat: --numstat 排列显示
+
++ git reflog  列出head曾经指向过的所有commit，reset --hard 覆盖的commit也可以找到
+
 
 ### reset
 + git reset --soft或者--hard 摘要（git log 查看每次commit 后面的hash码，不必全复制，代表区别即可）
@@ -46,10 +52,6 @@
 ### checkout
 + git checkout 分支名|commit摘要    跳转到某个分支或某次commit
 + git checkout -b 分支名         基于当前分支创建一个新的分支（分支名），并跳转过去
-
-### reflog
-
-+ git reflog  列出head曾经指向过的所有commit，reset --hard 覆盖的commit也可以找到
 
 
 ### branch

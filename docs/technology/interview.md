@@ -1,14 +1,21 @@
 
-
-
-
-## java 基础
-
+### java 基础
 
 + 动态代理的几种方式。
+使用JDK自带的动态代理，必须要有接口。使用AspectJ 的动态代理，是通过修改字节码实现，本质上是作为该class的子类。
+（包访问权限和final class）会代理失败。
+
 + String，Stringbuffer，StringBuilder的区别
-+ 线程池的种类，区别和使用场景
+  1. 可变性
+    + String 不可变
+    + StringBuffer 和 StringBuilder 可变
+  2. 线程安全
+    + String 不可变，因此是线程安全的
+    + StringBuilder 不是线程安全的
+    + StringBuffer 是线程安全的，内部使用 synchronized 来同步
+
 + 分析线程池的实现原理和线程的调度过程
+
 + 线程池如何调优
 + 线程池的最大线程数目根据什么确定
 + 动态代理的几种方式
@@ -238,3 +245,14 @@ foreach本质是 对象实现了 Iterable 接口，调用它的iterator（），
 + 设计一个秒杀系统，30分钟没付款就自动关闭交易（并发会很高）
 + 请列出你所了解的性能测试工具
 + 后台系统怎么防止请求重复提交？
+
+
+
+### 面试
+
+#### 技术基础
+
+* java中 float 是如何存储的？
+* java中 单例模式 有几种
+
+#### 算法

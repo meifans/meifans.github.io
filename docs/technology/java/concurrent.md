@@ -379,7 +379,7 @@ volatile关键字通过提供“内存屏障”的方式来防止指令被重排
         }
     }
 ![volatile](pictures/volatile.png)
-> x并不需要定义为volatile, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程a能看到线程1对x的修改：
+> x并不需要定义为volatile, 程序里可以有需要类似x的变量，我们只需要一个volatile变量b来确保线程12能看到线程1对x的修改：
 >
 1. 根据代码顺序规则，线程1的x=5; happens-before b=1;; 线程2的int dummy = b; happens-before while(x!=5);
 2. 根据volatile变量规则，线程2的b=1; happens-before int dummy=b;
