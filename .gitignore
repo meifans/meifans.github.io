@@ -18,6 +18,13 @@ target/
 *.DS_Store
 
 
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
 # maven ignore
 
 *.eclipse-pmd
