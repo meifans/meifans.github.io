@@ -5,21 +5,21 @@
 # Site
 title: 技术博客
 subtitle:
-description:
+description: meifans java spring docker k8s
 keywords:
-author: 卖女孩的小火柴
-language: 
+author: Meifans
+language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url:
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
-source_dir: source
+source_dir: docs
 public_dir: public
 tag_dir: tags
 archive_dir: archives
@@ -78,4 +78,6 @@ theme: yilia
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: git@github.com:meifans/meifans.github.io.git
+  branch: master
